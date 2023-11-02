@@ -1,1 +1,23 @@
 
+pipeline {
+    agent any
+
+    stages {
+        stage('SCM') {
+            steps {
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/VishnuNadella-Arcadis/Tests.git'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                // some block
+                sh "docker build -t vishnunadella352/demo-aws:latest ."
+            }
+        }
+        stage('Publish ECR'){
+            steps{
+                withEnv(["AWS_ACCESS_KEY_ID"])
+            }
+        }
+    }
+}
