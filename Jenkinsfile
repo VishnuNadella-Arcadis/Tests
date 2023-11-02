@@ -1,31 +1,22 @@
 pipeline {
-  agent any
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-  }
-  stages {
-    stage('Build') {
-      steps {
-        sh 'docker build -t vishnunadella352/jenkins-docker-hub .'
-      }
+    agent any
+
+    stages {
+        stage('SCM') {
+            steps {
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/VishnuNadella-Arcadis/Tests.git'
+            }
+        }
+        stage('Docker Build and Push') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'DockerHub') {
+                        // some block
+                        sh "docker build -t vishnunadella352/demo-aws:latest ."
+                        sh "docker push vishnunadella352/demo-aws:latest"
+                    }
+                }
+            }
+        }
     }
-    stage('Login') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
-    stage('Push') {
-      steps {
-        sh 'docker push vishnunadella352/jenkins-docker-hub'
-      }
-    }
-  }
-  post {
-    always {
-      sh 'docker logout'
-    }
-  }
 }
