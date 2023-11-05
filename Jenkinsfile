@@ -43,5 +43,28 @@ pipeline {
         }
       }
     }
+    stage('Executing Ansible Script') {
+      steps {
+        script{
+          ansiblePlaybook(
+            colorized: true,
+            inventory: '/home/ec2-user/learn/inventory.ini',
+            playbook: '/home/ec2-user/learn/ansible-script.yaml'
+          )
+        }
+      }
+    }
+  }
+  post {
+    success {
+      mail to: 'vishnu.nadella@arcadis.com',
+        subject: "Sucessful Build",
+        body: "The application is now up and running"
+    }
+    failure {
+      mail to: 'vishnu.nadella@arcadis.com',
+        subject: "Failed Build",
+        body: "Deployment was a failure, please take immediate action"
+    }
   }
 }
