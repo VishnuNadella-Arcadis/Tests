@@ -47,7 +47,6 @@ pipeline {
       steps {
         script{
           sh "echo $pwd"
-          sh "chmod +x -R /home/ec2-user/learn"
           dir("/home/ec2-user/learn"){
             sh "echo $pwd"
             sh "ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
