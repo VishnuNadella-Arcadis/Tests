@@ -55,16 +55,16 @@ pipeline {
       }
     }
   }
-  post {
-    success {
-      mail to: 'vishnu.nadella@arcadis.com',
-        subject: "Sucessful Build",
-        body: "The application is now up and running"
-    }
-    failure {
-      mail to: 'vishnu.nadella@arcadis.com',
-        subject: "Failed Build",
-        body: "Deployment was a failure, please take immediate action"
-    }
-  }
+  // post {
+  //   success {
+  //     mail to: 'vishnu.nadella@arcadis.com',
+  //       subject: "Sucessful Build",
+  //       body: "The application is now up and running"
+  //   }
+  //   failure {
+  //     mail to: 'vishnu.nadella@arcadis.com',
+  //       subject: "Failed Build",
+  //       body: "Deployment was a failure, please take immediate action"
+  //   }
+  // }
 }
