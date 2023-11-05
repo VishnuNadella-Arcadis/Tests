@@ -45,13 +45,15 @@ pipeline {
     }
     stage('Executing Ansible Script') {
       steps {
-        script{
-          sh "echo $pwd"
-          dir("/home/ec2-user/learn"){
-            sh "echo $pwd"
-            sh "ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
-          }
-        }
+        ansiblePlaybook become: true, credentialsId: 'ecr:ap-south-1:AWS creds', installation: 'Ansible', inventory: '/home/ec2-user/learn/inventory.imi', playbook: '/home/ec2-user/learn/ansible-script.yaml', sudo: true, vaultCredentialsId: 'amazon_assignment_creds', vaultTmpPath: ''
+        // script{
+          
+          // sh "echo $pwd"
+          // dir("/home/ec2-user/learn"){
+          //   sh "echo $pwd"
+          //   sh "ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
+          // }
+        // }
       }
     }
   }
