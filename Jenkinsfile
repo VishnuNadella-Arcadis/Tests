@@ -47,7 +47,8 @@ pipeline {
       steps {
         script{
           sh "echo $pwd"
-          sh "sudo cd /home/ec2-user/learn"
+          sh "sudo su"
+          sh "cd /home/ec2-user/learn"
           sh "ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
         }
       }
