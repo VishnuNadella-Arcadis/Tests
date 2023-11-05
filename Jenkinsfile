@@ -48,8 +48,8 @@ pipeline {
         script{
           ansiblePlaybook(
             colorized: true,
-            inventory: '/home/ec2-user/learn/inventory.ini',
-            playbook: '/home/ec2-user/learn/ansible-script.yaml'
+            inventory: '/learn/inventory.ini',
+            playbook: '/learn/ansible-script.yaml'
           )
         }
       }
