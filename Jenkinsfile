@@ -46,11 +46,9 @@ pipeline {
     stage('Executing Ansible Script') {
       steps {
         script{
-          ansiblePlaybook(
-            colorized: true,
-            inventory: '/learn/inventory.ini',
-            playbook: '/learn/ansible-script.yaml'
-          )
+          sh "echo $pwd"
+          sh "cd /home/ec2-user/learn/"
+          sh "ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
         }
       }
     }
