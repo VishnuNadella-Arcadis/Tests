@@ -48,7 +48,7 @@ pipeline {
         // ansiblePlaybook become: true, credentialsId: 'ecr:ap-south-1:AWS creds', installation: 'Ansible', inventory: '/home/ec2-user/learn/inventory.imi', playbook: '/home/ec2-user/learn/ansible-script.yaml', vaultCredentialsId: 'amazon_assignment_creds', vaultTmpPath: ''
         script{
           
-          sh "echo $ls"
+          sh "ls"
           // sh "echo $pwd"
           // sh "echo ${sudo-creds} | sudo -S ${sudo-creds}"
           dir("/home/ec2-user"){
