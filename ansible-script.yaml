@@ -1,0 +1,40 @@
+---
+- name: Deploy Docker Image
+  hosts: web_server
+  become: True  # This assumes you have sudo access on the remote server
+  become_user: root
+  gather_facts: False
+  
+  tasks:    
+    - name: Install python pip
+      yum:
+        name: python-pip
+        state: present
+    - name: Install docker
+      yum:
+        name: docker
+        state: present
+    - name: start docker
+      service:
+        name: docker
+        state: started
+        enabled: yes     
+    - name: Install docker-py python module
+      pip:
+        name: docker-py
+        state: present
+      
+    - name: Pull Docker Image from ECR
+      docker_image:
+        name: vishnunadella352/demo-aws:latest
+        source: pull
+      register: image_pull
+      
+    - name: Run Docker Container
+      docker_container:
+        name: Assignment
+        image: vishnunadella352/demo-aws:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
