@@ -26,14 +26,14 @@
       
     - name: Pull Docker Image from ECR
       docker_image:
-        name: vishnunadella352/demo-aws:latest
+        name: vishnunadella352/assignment:latest
         source: pull
       register: image_pull
       
     - name: Run Docker Container
       docker_container:
         name: Assignment
-        image: vishnunadella352/demo-aws:latest
+        image: vishnunadella352/assignment:latest
         state: started
         restart_policy: always
         ports:
