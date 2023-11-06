@@ -49,7 +49,7 @@ pipeline {
         script{
           
           sh "echo $pwd"
-          sh "echo ${sudo-creds} | sudo -S su"
+          sh "echo ${sudo-creds} | sudo -S ${sudo-creds}"
           dir("/home/ec2-user"){
             sh "ls -l"
             sh "echo $pwd"
