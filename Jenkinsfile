@@ -51,8 +51,8 @@ pipeline {
                 script{
                     withDockerRegistry(credentialsId: 'docker-creds') {
                         // some block
-                        sh "docker build -t vishnunadella352/demo-aws:latest ."
-                        sh "docker push vishnunadella352/demo-aws:latest"
+                        sh "docker build -t vishnunadella352/assignment:latest ."
+                        sh "docker push vishnunadella352/assignment:latest"
                     }
                 }
             }
