@@ -44,19 +44,32 @@ pipeline {
     //   }
     // }
 
-    // This is for docker hub
-    stage('Pushing to Docker Hub') {
-      steps {
-        script{
-          withCredentials([string(credentialsId: 'docker-creds', variable: 'DOCKER-CREDS')]) {
-            sh 'docker login -u vishnunadella352 -p ${DOCKER-CREDS}'
-            sh "docker tag assignment:${IMAGE_TAG} vishnunadella352/assignment:${IMAGE_TAG}"
-            sh "docker push vishnunadella352/assignment:${IMAGE_TAG}"
-            sh 'docker logout'
-          }
+    // // This is for docker hub
+
+      stage('Docker Build and Push') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'DockerHub') {
+                        // some block
+                        sh "docker build -t vishnunadella352/demo-aws:latest ."
+                        sh "docker push vishnunadella352/demo-aws:latest"
+                    }
+                }
+            }
         }
-      }
-    }
+    
+    // stage('Pushing to Docker Hub') {
+    //   steps {
+    //     script{
+    //       withCredentials([string(credentialsId: 'docker-creds', variable: 'DOCKER-CREDS')]) {
+    //         sh 'docker login -u vishnunadella352 -p ${DOCKER-CREDS}'
+    //         sh "docker tag assignment:${IMAGE_TAG} vishnunadella352/assignment:${IMAGE_TAG}"
+    //         sh "docker push vishnunadella352/assignment:${IMAGE_TAG}"
+    //         sh 'docker logout'
+    //       }
+    //     }
+    //   }
+    // }
 
     
     stage('Executing Ansible Script') {
