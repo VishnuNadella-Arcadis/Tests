@@ -49,7 +49,7 @@ pipeline {
       stage('Docker Build and Push') {
             steps {
                 script{
-                    withDockerRegistry(credentialsId: 'DockerHub') {
+                    withDockerRegistry(credentialsId: 'docker-creds') {
                         // some block
                         sh "docker build -t vishnunadella352/demo-aws:latest ."
                         sh "docker push vishnunadella352/demo-aws:latest"
