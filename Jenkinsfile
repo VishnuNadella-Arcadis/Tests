@@ -50,8 +50,9 @@ pipeline {
           
           sh "echo $pwd"
           dir("/home/ec2-user/learn"){
+            sh "ls -l"
             sh "echo $pwd"
-            sh "sudpo ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
+            sh "sudo ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
           }
         }
       }
