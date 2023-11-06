@@ -45,18 +45,19 @@ pipeline {
     }
     stage('Executing Ansible Script') {
       steps {
+        ansiblePlaybook credentialsId: 'assignment-mgmt', disableHostKeyChecking: true, installation: 'Ansible Assignment', inventory: 'inventory.ini', playbook: 'ansible-script.yaml', vaultTmpPath: ''
         // ansiblePlaybook become: true, credentialsId: 'ecr:ap-south-1:AWS creds', installation: 'Ansible', inventory: '/home/ec2-user/learn/inventory.imi', playbook: '/home/ec2-user/learn/ansible-script.yaml', vaultCredentialsId: 'amazon_assignment_creds', vaultTmpPath: ''
-        script{
+        // script{
           
-          sh "ls"
-          // sh "echo $pwd"
-          // sh "echo ${sudo-creds} | sudo -S ${sudo-creds}"
-          dir("/home/ec2-user"){
-            sh "ls -l"
-            sh "echo $pwd"
-            sh "sudo ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
-          }
-        }
+        //   sh "ls"
+        //   // sh "echo $pwd"
+        //   // sh "echo ${sudo-creds} | sudo -S ${sudo-creds}"
+        //   dir("/home/ec2-user"){
+        //     sh "ls -l"
+        //     sh "echo $pwd"
+        //     sh "sudo ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
+        //   }
+        // }
       }
     }
   }
