@@ -33,16 +33,32 @@ pipeline {
         }
       }
     }
+    // The following code is working
+    // // Uploading Docker images into AWS ECR
+    // stage('Pushing to ECR') {
+    //   steps {
+    //     script {
+    //       sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+    //       sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+    //     }
+    //   }
+    // }
 
-    // Uploading Docker images into AWS ECR
-    stage('Pushing to ECR') {
+    // This is for docker hub
+    stage('Pushing to Docker Hub') {
       steps {
-        script {
-          sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
-          sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+        script{
+          withCredentials([string(credentialsId: 'docker-creds', variable: 'docker-creds')]) {
+            sh 'docker login -u vishnunadella352 -p ${docker-creds}'
+            sh "docker tag assignment:${IMAGE_TAG} vishnunadella352/assignment:${IMAGE_TAG}"
+            sh "docker push vishnunadella352/assignment:${IMAGE_TAG}"
+            sh 'docker logout'
+          }
         }
       }
     }
+
+    
     stage('Executing Ansible Script') {
       steps {
         ansiblePlaybook credentialsId: 'assignment-mgmt', disableHostKeyChecking: true, installation: 'Ansible Assignment', inventory: 'inventory.ini', playbook: 'ansible-script.yaml', vaultTmpPath: ''
