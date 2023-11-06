@@ -48,8 +48,8 @@ pipeline {
     stage('Pushing to Docker Hub') {
       steps {
         script{
-          withCredentials([string(credentialsId: 'docker-creds', variable: 'docker-creds')]) {
-            sh 'docker login -u vishnunadella352 -p ${docker-creds}'
+          withCredentials([string(credentialsId: 'docker-creds', variable: 'DOCKER-CREDS')]) {
+            sh 'docker login -u vishnunadella352 -p ${DOCKER-CREDS}'
             sh "docker tag assignment:${IMAGE_TAG} vishnunadella352/assignment:${IMAGE_TAG}"
             sh "docker push vishnunadella352/assignment:${IMAGE_TAG}"
             sh 'docker logout'
