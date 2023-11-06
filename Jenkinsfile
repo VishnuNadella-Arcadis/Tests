@@ -49,7 +49,7 @@ pipeline {
         script{
           
           sh "echo $pwd"
-          dir("/home/ec2-user/learn"){
+          dir("/home/ec2-user"){
             sh "ls -l"
             sh "echo $pwd"
             sh "sudo ansible-playbook -i inventory.imi -c ansible.cfg  ansible-script.yaml"
